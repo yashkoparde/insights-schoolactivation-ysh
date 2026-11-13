@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Activation</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #080808;
+    color: #f5f5f5;
+    font-family: Inter, Helvetica, Arial, sans-serif;
+}
+
+/* INTRO */
+
+#intro {
+    height: 100vh;
+    height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    background: #080808;
+    z-index: 10;
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.avatar {
+    width: 100px;
+    height: 150px;
+    position: relative;
+    animation: walkIn 2s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+.head {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #eee;
+    top: 0;
+    left: 32px;
+}
+
+.body {
+    position: absolute;
+    width: 35px;
+    height: 57px;
+    background: #eee;
+    border-radius: 12px 12px 5px 5px;
+    top: 42px;
+    left: 32px;
+}
+
+.arm, .leg {
+    position: absolute;
+    width: 11px;
+    background: #eee;
+    border-radius: 10px;
+    transform-origin: top center;
+}
+
+.arm {
+    height: 48px;
+    top: 46px;
+    left: 23px;
+}
+
+.arm.right {
+    left: 65px;
+}
+
+.leg {
+    height: 48px;
+    top: 94px;
+    left: 37px;
+}
+
+.leg.right {
+    left: 51px;
+}
+
+.walking .leg {
+    animation: walkLeg .3s infinite alternate;
+}
+
+.walking .leg.right {
+    animation-delay: .15s;
+}
+
+.walking .arm {
+    animation: walkArm .3s infinite alternate;
+}
+
+.walking .arm.right {
+    animation-delay: .15s;
+}
+
+.waving .arm.right {
+    animation: wave .45s ease-in-out infinite alternate;
+}
+
+@keyframes walkIn {
+    from { transform: translateX(-220px); }
+    to { transform: translateX(0); }
+}
+
+@keyframes walkLeg {
+    to { transform: rotate(25deg); }
+}
+
+@keyframes walkArm {
+    to { transform: rotate(-25deg); }
+}
+
+@keyframes wave {
+    from { transform: rotate(-130deg); }
+    to { transform: rotate(-165deg); }
+}
+
+.hello {
+    font-size: clamp(48px, 7vw, 76px);
+    font-weight: 600;
+    letter-spacing: -3px;
+    margin-top: 15px;
+    opacity: 0;
+    animation: appear 1s ease 2s forwards;
+}
+
+@keyframes appear {
+    to { opacity: 1; }
+}
+
+/* MAIN */
+
+#main {
+    min-height: 100vh;
+    padding: 100px 24px 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+#main.visible {
+    opacity: 1;
+}
+
+.content {
+    width: 100%;
+    max-width: 760px;
+}
+
+h1 {
+    font-size: clamp(30px, 5vw, 48px);
+    line-height: 1.15;
+    letter-spacing: -2px;
+    font-weight: 500;
+    margin-bottom: 65px;
+    max-width: 660px;
+}
+
+/* PRESENTATION LINKS */
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.card {
+    min-height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #f5f5f5;
+    background: #111;
+    border: 1px solid #292929;
+    padding: 25px 30px;
+    font-size: 17px;
+    font-weight: 400;
+    transition:
+        background .4s ease,
+        border-color .4s ease,
+        transform .4s ease,
+        opacity .7s ease;
+    
+    /* Scroll reveal initial state */
+    opacity: 0;
+    transform: translateY(55px) scale(.97);
+}
+
+.card.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.card:hover {
+    background: #1c1c1c;
+    border-color: #777;
+    transform: translateX(7px) !important;
+}
+
+.card:active {
+    transform: scale(.985) !important;
+}
+
+.card span {
+    pointer-events: none;
+}
+
+.card .arrow {
+    font-size: 24px;
+    color: #777;
+    transition: transform .3s ease, color .3s ease;
+}
+
+.card:hover .arrow {
+    color: white;
+    transform: translate(4px, -4px);
+}
+
+.card:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 4px;
+}
+
+/* SCROLL SPACING */
+
+@media (min-width: 700px) {
+    #main {
+        padding-top: 130px;
+        padding-bottom: 130px;
+    }
+
+    .cards {
+        gap: 22px;
+    }
+
+    .card {
+        min-height: 112px;
+        padding: 30px 35px;
+    }
+}
+
+@media (max-width: 500px) {
+    h1 {
+        margin-bottom: 40px;
+    }
+
+    .card {
+        min-height: 80px;
+        padding: 20px;
+        font-size: 15px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+
+<section id="intro">
+
+    <div class="avatar walking" id="avatar">
+        <div class="head"></div>
+        <div class="body"></div>
+        <div class="arm"></div>
+        <div class="arm right"></div>
+        <div class="leg"></div>
+        <div class="leg right"></div>
+    </div>
+
+    <div class="hello">Hi iNSIGHTS Presenter!</div>
+
+</section>
+
+
+<!-- PRESENTATIONS -->
+
+<main id="main">
+
+    <div class="content">
+
+        <h1>
+            Ready to see the Presentation Slides for School Activation Program?
+        </h1>
+
+        <div class="cards">
+
+            <a class="card"
+               href="https://drive.google.com/file/d/1l-G7cBy5M0a-9lV5vIIxsmWRf3sUNu3T/view?usp=sharing"
+               target="_blank"
+               rel="noopener noreferrer">
+                <span>6th–10th Student Slides</span>
+                <span class="arrow">↗</span>
+            </a>
+
+            <a class="card"
+               href="https://drive.google.com/file/d/1zeiQ6p7zP0rlghdleIvC8UEoLLqq86no/view?usp=sharing"
+               target="_blank"
+               rel="noopener noreferrer">
+                <span>11th–12th PCM</span>
+                <span class="arrow">↗</span>
+            </a>
+
+            <a class="card"
+               href="https://drive.google.com/file/d/1hHuwjAe0mN_lKaicma7qlZCqzVhnAMp_/view?usp=sharing"
+               target="_blank"
+               rel="noopener noreferrer">
+                <span>11th–12th PCB</span>
+                <span class="arrow">↗</span>
+            </a>
+
+            <a class="card"
+               href="https://drive.google.com/file/d/1uNfezfoWVjsybgu92lcJn8DFGEo8P0_x/view?usp=sharing"
+               target="_blank"
+               rel="noopener noreferrer">
+                <span>11th–12th Commerce</span>
+                <span class="arrow">↗</span>
+            </a>
+
+            <a class="card"
+             href="https://drive.google.com/file/d/12Nc5nIk3DyYxdHGToRLFaGOzA14b_LTD/view?usp=sharing"
+               target="_blank"
+               rel="noopener noreferrer">
+                <span>11th–12th Humanities</span>
+                <span class="arrow">↗</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+// INTRO ANIMATION
+
+const intro = document.getElementById("intro");
+const avatar = document.getElementById("avatar");
+const main = document.getElementById("main");
+
+// Stop walking and wave
+setTimeout(() => {
+    avatar.classList.remove("walking");
+    avatar.classList.add("waving");
+}, 2100);
+
+// Fade out intro
+setTimeout(() => {
+    intro.style.opacity = "0";
+    intro.style.transform = "translateY(-20px)";
+}, 4000);
+
+// Reveal presentation screen
+setTimeout(() => {
+    intro.style.display = "none";
+    main.classList.add("visible");
+}, 5000);
+
+
+// SCROLL-BASED CARD ANIMATION
+
+const cards = document.querySelectorAll(".card");
+
+const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            const index = [...cards].indexOf(entry.target);
+
+            // Stagger each card
+            setTimeout(() => {
+                entry.target.classList.add("revealed");
+            }, index * 110);
+
+            observer.unobserve(entry.target);
+        }
+
+    });
+
+}, {
+    threshold: 0.15,
+    rootMargin: "0px 0px -35px 0px"
+});
+
+cards.forEach(card => {
+    observer.observe(card);
+});
+
+</script>
+
+</body>
+</html>
